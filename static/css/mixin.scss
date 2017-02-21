@@ -1,0 +1,74 @@
+@mixin font-face($name, $font-files, $eot: false, $weight: false, $style: false) {
+  $iefont: unquote("#{$eot}?#iefix");
+  @font-face {
+    font-family: quote($name);
+    @if $eot {
+      src: font-url($eot);
+      $font-files: font-url($iefont) unquote("format('opentype')"), $font-files;
+    }
+    src: $font-files;
+    @if $weight {
+      font-weight: $weight;
+    }
+    @if $style {
+      font-style: $style;
+    }
+  }
+}
+
+@mixin con-show-hide($bool){
+  @if $bool{
+    display: block;
+  }@else{
+    display: none;
+  }
+}
+
+@mixin add-default-shadow($bool) {
+	@if $bool{
+		-webkit-box-shadow: 2px 2px 10px 1px rgba(230, 230, 230, 0.62);
+		-moz-box-shadow:    2px 2px 10px 1px rgba(230, 230, 230, 0.62);
+		box-shadow:         2px 2px 10px 1px rgba(230, 230, 230, 0.62);
+	}
+}
+
+@mixin bp($point){
+	@media screen and (max-width:$point) {
+		@content;
+	}
+}
+
+@mixin rotate($deg){
+	-ms-transform: rotate($deg+deg); /* IE 9 */
+	-webkit-transform: rotate($deg+deg); /* Chrome, Safari, Opera */
+	transform: rotate($deg+deg);
+}
+
+@mixin trans($time){
+	-webkit-transition: $time; /* Safari */
+	transition: $time;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &s:-ms-input-placeholder      {@content}
+}
+
+@mixin fixed-aspect-ratio($width, $height) {
+	position: relative;
+	&:before {
+		display: block;
+		content: "";
+		width: 100%;
+		padding-top: ($height / $width) * 100%;
+	}
+	> .content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
